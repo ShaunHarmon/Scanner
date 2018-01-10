@@ -99,7 +99,7 @@ def main():
     print('Volume scanner that checks every 30 seconds for volume spikes')
     print('in the past 2 mins on Bittrex. Volume is labeled in base coin. ')
     print('Direction indicates whether there are more buy orders or sell orders during that time frame.\n')
-    root.mainloop()
+    #root.mainloop()
     print('Scanning......\n')
     print('Coin    Last Trade    Volume change    Timestamp    Direction')
     print('----------------------------------------------------------------\n')
