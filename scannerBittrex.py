@@ -1,5 +1,5 @@
-import urllib
 import urllib3
+import urllib
 import json
 import sched, time
 import sys
