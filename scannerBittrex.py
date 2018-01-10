@@ -4,12 +4,12 @@ import json
 import sched, time
 import sys
 import os
+
 #from tkinter import *
 #import tkinter as ttk
 
 from flask import Flask
-from flask import request
-from flask import make_response
+
 
 # Flask app should start in global layout
 app = Flask(__name__)
@@ -108,8 +108,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-    port = int(os.getenv('PORT', 5000))
+    port = int(os.environ('PORT', 5000))
 
-    print ("Starting app on port %d" % port)
-
-    app.run(host='0.0.0.0',port=port)
+    app.run(debug=TRUE, host='0.0.0.0',port=port)
