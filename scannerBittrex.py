@@ -3,8 +3,8 @@ import urllib
 import json
 import sched, time
 import sys
-from tkinter import *
-import tkinter as ttk
+#from tkinter import *
+#import tkinter as ttk
 
 from flask import Flask
 from flask import request
@@ -13,27 +13,27 @@ from flask import make_response
 # Flask app should start in global layout
 app = Flask(__name__)
 
-root = Tk()
-root.title("Volume Selector")
+#root = Tk()
+#root.title("Volume Selector")
  
 # Add a grid
-mainframe = Frame(root)
-mainframe.grid(column=0,row=0, sticky=(N,W,E,S) )
-mainframe.columnconfigure(0, weight = 1)
-mainframe.rowconfigure(0, weight = 1)
-mainframe.pack(pady = 100, padx = 100)
+#mainframe = Frame(root)
+#mainframe.grid(column=0,row=0, sticky=(N,W,E,S) )
+#mainframe.columnconfigure(0, weight = 1)
+#mainframe.rowconfigure(0, weight = 1)
+#mainframe.pack(pady = 100, padx = 100)
  
 # Create a Tkinter variable
-tkvar = StringVar(root)
+#tkvar = StringVar(root)
  
 # Dictionary with options
-choices = [ '25','75','50','100','150']
+#choices = [ '25','75','50','100','150']
 
  
-popupMenu = OptionMenu(mainframe, tkvar, *choices)
-Label(mainframe, text="Choose volume trigger").grid(row = 1, column = 1)
-popupMenu.grid(row = 2, column =1)
-tkvar.set('50') # set the default option
+#popupMenu = OptionMenu(mainframe, tkvar, *choices)
+#Label(mainframe, text="Choose volume trigger").grid(row = 1, column = 1)
+#popupMenu.grid(row = 2, column =1)
+#tkvar.set('50') # set the default option
 
 urllib3.disable_warnings()
 s = sched.scheduler(time.time, time.sleep)
@@ -55,8 +55,7 @@ def getMarketSummary():
 def formatList(data):
     localtime = time.asctime( time.localtime(time.time()) )
    
-    volume = (tkvar.get())
- 
+
     for i in data['result']:
         baseValueList = []
         last = i['Last']
@@ -66,7 +65,7 @@ def formatList(data):
             baseValueList.append(i['BaseVolume'])
             coins[i['MarketName']] = baseValueList
             if len(baseValueList)>4:
-                if (baseValueList[0] - baseValueList[4]) > float(volume):
+                if (baseValueList[0] - baseValueList[4]) > 50:
                     if i['MarketName'][:4] != 'USDT':
                         if 'XRP' not in i['MarketName']:
                             if i['OpenBuyOrders']>i['OpenSellOrders']:
