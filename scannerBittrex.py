@@ -6,7 +6,13 @@ import sys
 from tkinter import *
 import tkinter as ttk
 
- 
+from flask import Flask
+from flask import request
+from flask import make_response
+
+# Flask app should start in global layout
+app = Flask(__name__)
+
 root = Tk()
 root.title("Volume Selector")
  
@@ -102,4 +108,8 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
+    port = int(os.getenv('PORT', 5000))
+
+    print ("Starting app on port %d" % port)
+
+    app.run(debug=False, port=port, host='0.0.0.0')
