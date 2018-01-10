@@ -3,6 +3,7 @@ import urllib
 import json
 import sched, time
 import sys
+import os
 #from tkinter import *
 #import tkinter as ttk
 
@@ -111,4 +112,4 @@ if __name__ == "__main__":
 
     print ("Starting app on port %d" % port)
 
-    app.run(debug=False, port=port, host='0.0.0.0')
+    app.run(host='0.0.0.0',port=port)
