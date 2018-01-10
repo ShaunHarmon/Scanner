@@ -1,1 +1,1 @@
-web: python SalonApp.py
+web: python scannerBittrex.py
