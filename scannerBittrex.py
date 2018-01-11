@@ -107,7 +107,6 @@ def main():
     updateCoinList()
 
 if __name__ == "__main__":
-    main()
     port = int(os.environ('PORT', 5000))
-
     app.run(debug=TRUE, host='0.0.0.0',port=port)
+    main()
