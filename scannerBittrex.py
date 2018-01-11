@@ -4,12 +4,21 @@ import json
 import sched, time
 import sys
 import os
+import signal
 
 #from tkinter import *
 #import tkinter as ttk
 
 from flask import Flask
 
+class GracefulKiller:
+  kill_now = False
+  def __init__(self):
+    signal.signal(signal.SIGINT, self.exit_gracefully)
+    signal.signal(signal.SIGTERM, self.exit_gracefully)
+
+  def exit_gracefully(self,signum, frame):
+    self.kill_now = True
 
 # Flask app should start in global layout
 app = Flask(__name__)
@@ -84,7 +93,7 @@ def formatList(data):
             baseValueList.append(i['BaseVolume'])
             coins[i['MarketName']] = baseValueList
 
-        yield i
+
 
     
 
