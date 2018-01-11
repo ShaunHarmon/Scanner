@@ -104,7 +104,7 @@ def main():
     print('Scanning......\n')
     print('Coin    Last Trade    Volume change    Timestamp    Direction')
     print('----------------------------------------------------------------\n')
-    updateCoinList()
+    os.spawn(os.P_NOWAIT,'updateCoinList')
 
 if __name__ == "__main__":
     
