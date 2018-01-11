@@ -91,7 +91,7 @@ def formatList(data):
 def updateCoinList():
     currentMarket = getMarketSummary()
     formatList(currentMarket)
-    s.enter(30, 1, updateCoinList ,())
+    s.enter(29, 1, updateCoinList ,())
     s.run()
 
 @app.route('/')  
@@ -104,7 +104,7 @@ def main():
     print('Scanning......\n')
     print('Coin    Last Trade    Volume change    Timestamp    Direction')
     print('----------------------------------------------------------------\n')
-    os.spawn(os.P_NOWAIT,'updateCoinList()')
+    updateCoinList()
 
 if __name__ == "__main__":
     
