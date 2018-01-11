@@ -94,7 +94,7 @@ def updateCoinList():
     s.enter(30, 1, updateCoinList ,())
     s.run()
 
-@app.route('/main')  
+@app.route('/')  
 def main():
     print(".....................BITTREX SCANNER..................\n")
     print('Volume scanner that checks every 30 seconds for volume spikes')
