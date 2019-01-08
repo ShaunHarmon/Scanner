@@ -6,50 +6,17 @@ import sys
 import os
 import signal
 
-#from tkinter import *
-#import tkinter as ttk
 
-from flask import Flask
+from flask import Flask, render_template
 
-class GracefulKiller:
-  kill_now = False
-  def __init__(self):
-    signal.signal(signal.SIGINT, self.exit_gracefully)
-    signal.signal(signal.SIGTERM, self.exit_gracefully)
 
-  def exit_gracefully(self,signum, frame):
-    self.kill_now = True
-
-# Flask app should start in global layout
 app = Flask(__name__)
-
-#root = Tk()
-#root.title("Volume Selector")
- 
-# Add a grid
-#mainframe = Frame(root)
-#mainframe.grid(column=0,row=0, sticky=(N,W,E,S) )
-#mainframe.columnconfigure(0, weight = 1)
-#mainframe.rowconfigure(0, weight = 1)
-#mainframe.pack(pady = 100, padx = 100)
- 
-# Create a Tkinter variable
-#tkvar = StringVar(root)
- 
-# Dictionary with options
-#choices = [ '25','75','50','100','150']
-
- 
-#popupMenu = OptionMenu(mainframe, tkvar, *choices)
-#Label(mainframe, text="Choose volume trigger").grid(row = 1, column = 1)
-#popupMenu.grid(row = 2, column =1)
-#tkvar.set('50') # set the default option
 
 urllib3.disable_warnings()
 s = sched.scheduler(time.time, time.sleep)
 coins = {}
 sys.setrecursionlimit(2500)
-
+coin = ""
 
 
 
@@ -85,23 +52,25 @@ def formatList(data):
                             else:
                                 direction = "Neutral"
                                 
-                            print(i['MarketName'],'--',float('{0:.15f}'.format(last)),'--', baseValueList[0] - baseValueList[4],baseCoin,'--', localtime,'--', direction)
-                        
+                            print(i['MarketName'],'--',last,'--', baseValueList[0] - baseValueList[4],baseCoin,'--', localtime,'--', direction)
+
+
                             
                 baseValueList.pop(0)
         else:
             baseValueList.append(i['BaseVolume'])
             coins[i['MarketName']] = baseValueList
 
-
+def repeat():
+    s.enter(29, 1, updateCoinList ,())
+    s.run()
 
     
 
 def updateCoinList():
     currentMarket = getMarketSummary()
     formatList(currentMarket)
-    s.enter(29, 1, updateCoinList ,())
-    s.run()
+    repeat()
 
 @app.route('/')  
 def main():
@@ -109,14 +78,10 @@ def main():
     print('Volume scanner that checks every 30 seconds for volume spikes')
     print('in the past 2 mins on Bittrex. Volume is labeled in base coin. ')
     print('Direction indicates whether there are more buy orders or sell orders during that time frame.\n')
-    #root.mainloop()
     print('Scanning......\n')
     print('Coin    Last Trade    Volume change    Timestamp    Direction')
     print('----------------------------------------------------------------\n')
-    updateCoinList()
+    return render_template('template.html',updateCoinList())
 
 if __name__ == "__main__":
-    
-    port = int(os.getenv('PORT', 5000))
-    app.run(debug=True, host='0.0.0.0',port=port)
-    #main()
+    app.run(debug=True)
